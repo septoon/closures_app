@@ -1,10 +1,4 @@
-export const characters = [
-  { name: 'маг', health: 100 },
-  { name: 'лучник', health: 80 },
-  { name: 'мечник', health: 10 },
-];
-
-export function setUpAttacks(item, shield = true) {
+function setUpAttacks(item, shield = true) {
   const result = [];
 
   const damageHero = (integer) => {
@@ -18,9 +12,9 @@ export function setUpAttacks(item, shield = true) {
 
   const ifNull = (name) => {
     let isNull = false;
-    for (const i in item) {
+    Object.keys(item.values()).forEach(i => {
       isNull = !!(item[i].name === name && item[i].health === 0);
-    }
+    });
     return isNull;
   };
 
@@ -30,7 +24,6 @@ export function setUpAttacks(item, shield = true) {
     } else if (item[index].health > 0) {
       item[index].health -= whoAttack;
     }
-    characters[index] = item[index];
   };
 
   const damage = (name, integer) => {
@@ -38,16 +31,18 @@ export function setUpAttacks(item, shield = true) {
     if (shield) {
       const doDamage = damageHero(integer);
       const { damageToThisHero, damageToAnyHero } = doDamage;
-      for (const index in item) {
+      Object.keys(item).forEach(index => {
         item[index].name === name ? calculationLife(index, damageToThisHero) : calculationLife(index, damageToAnyHero);
-      }
+      });
     } else {
-      for (const index in item) {
+      Object.keys(item).forEach(index => {
         item[index].name === name ? calculationLife(index, integer) : '';
-      }
+      });
     }
   };
   result.push(damage);
 
   return result;
 }
+
+export default setUpAttacks;

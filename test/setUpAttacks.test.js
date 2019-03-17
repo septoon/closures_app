@@ -1,4 +1,4 @@
-import { setUpAttacks } from '../src/js/app';
+import setUpAttacks from '../src/js/setUpAttacks';
 
 test('demageHero', () => {
   const characters = [
